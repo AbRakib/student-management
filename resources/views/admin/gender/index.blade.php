@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Education</h1>
+            <h1 class="h3 mb-0 text-gray-800">Gender</h1>
             <a href="javascript:void(0);" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
                 <i class="fas fa-download fa-sm text-white-50"></i> 
                 Generate Report
@@ -19,9 +19,9 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Total Education</div>
+                                    Total Gender</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ count($educations) ?? 0 }}
+                                    {{ count($genders) ?? 0 }}
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -38,14 +38,14 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex align-items-center">
-                <h6 class="m-0 font-weight-bold text-primary">Education Lists</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Gender Lists</h6>
                 <!-- Button trigger modal -->
-                <a class="btn btn-success btn-sm rounded-0 ml-auto" href="javascript:void(0);" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus-square"></i> Create Education</a>
+                <a class="btn btn-success btn-sm rounded-0 ml-auto" href="javascript:void(0);" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus-square"></i> Create Gender</a>
                 <!-- Button trigger modal -->
                 
-                <!-- create education Modal -->
-                @include('admin.education.modal.create')
-                <!-- Education crete Modal end -->
+                <!-- create gender Modal -->
+                @include('admin.gender.modal.create')
+                <!-- gender crete Modal end -->
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="dataShow">
@@ -65,7 +65,7 @@
         function getData() {
             $.ajax({
                 type: "get",
-                url: "{{ route('admin.education.show') }}",
+                url: "{{ route('admin.gender.show') }}",
                 data: "data",
                 dataType: "json",
                 success: function (response) {
@@ -75,10 +75,10 @@
                 }
             });
         }
-        $("#educationSubmit").click(function (e) { 
+        $("#genderSubmit").click(function (e) { 
             e.preventDefault();
-            var formData = $("#educationForm").serialize();
-            let form_route = "{{ route('admin.education.store') }}";
+            var formData = $("#genderForm").serialize();
+            let form_route = "{{ route('admin.gender.store') }}";
             $.ajax({
                 type: "POST",
                 url: form_route,
@@ -104,7 +104,7 @@
         $(document).ready(function() {
             function fetchAndRenderData(page) {
                 $.ajax({
-                    url: '/admin/show-education?page=' + page,
+                    url: '/admin/show-gender?page=' + page,
                     type: 'GET',
                     success: function(response) {
                         $('#dataShow').html(response.view);
@@ -140,7 +140,7 @@
         function onDelete(id) {
             $.ajax({
                 type: "get",
-                url: "{{ route('admin.education.delete') }}",
+                url: "{{ route('admin.gender.delete') }}",
                 data: {
                     'id':id,
                 },

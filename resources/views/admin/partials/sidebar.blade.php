@@ -111,8 +111,7 @@
         <div id="genderMenu" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Gender Components:</h6>
-                <a class="collapse-item" href="javascript:void(0);"><i class="fas fa-arrow-circle-right text-success"></i> Genders</a>
-                <a class="collapse-item" href="javascript:void(0);"><i class="fas fa-plus-circle"></i> Create Gender</a>
+                <a class="collapse-item" href="{{ route('admin.gender.index') }}"><i class="fas fa-arrow-circle-right text-success"></i> Genders</a>
             </div>
         </div>
     </li>
