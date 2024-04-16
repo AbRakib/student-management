@@ -5,7 +5,7 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Education</h1>
             <a href="javascript:void(0);" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
-                <i class="fas fa-download fa-sm text-white-50"></i> 
+                <i class="fas fa-download fa-sm text-white-50"></i>
                 Generate Report
             </a>
         </div>
@@ -40,16 +40,17 @@
             <div class="card-header py-3 d-flex align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">Education Lists</h6>
                 <!-- Button trigger modal -->
-                <a class="btn btn-success btn-sm rounded-0 ml-auto" href="javascript:void(0);" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus-square"></i> Create Education</a>
+                <a class="btn btn-success btn-sm rounded-0 ml-auto" href="javascript:void(0);" data-toggle="modal"
+                    data-target="#exampleModal"><i class="fas fa-plus-square"></i> Create Education</a>
                 <!-- Button trigger modal -->
-                
+
                 <!-- create education Modal -->
                 @include('admin.education.modal.create')
                 <!-- Education crete Modal end -->
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="dataShow">
-                    
+
                 </div>
             </div>
         </div>
@@ -59,23 +60,26 @@
 
 @section('admin-script')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             getData();
         });
+
         function getData() {
             $.ajax({
                 type: "get",
                 url: "{{ route('admin.education.show') }}",
                 data: "data",
                 dataType: "json",
-                success: function (response) {
+                success: function(response) {
                     if (response.status == 200) {
                         $("#dataShow").html(response.view);
                     }
                 }
             });
         }
-        $("#educationSubmit").click(function (e) { 
+
+        // store data
+        $("#educationSubmit").click(function(e) {
             e.preventDefault();
             var formData = $("#educationForm").serialize();
             let form_route = "{{ route('admin.education.store') }}";
@@ -87,7 +91,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 dataType: "json",
-                success: function (response) {
+                success: function(response) {
                     $("#name").val('');
                     if (response.status == 200) {
                         getData();
@@ -98,6 +102,42 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        function submitEdit(id) {
+            var formData = $("#educationFormEdit").serialize();
+            let form_route = "{{ route('admin.education.update', ':id') }}";
+            form_route = form_route.replace(':id', id);
+            console.log(formData);
+            $.ajax({
+                type: "POST",
+                url: form_route,
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: "json",
+                success: function(response) {
+                    $("#name").val('');
+                    if (response.status == 200) {
+                        getData();
+                        console.log(response.message);
+                        // Swal.fire({
+                        //     title: response.message+"!",
+                        //     text: "You clicked the button!",
+                        //     icon: "success"
+                        // });
+                    } else {
+                        Swal.fire({
+                            title: response.message+"Failed!",
+                            text: "You clicked the button!",
+                            icon: "error"
+                        });
+                    }
+                }
+            });
+        }
     </script>
 
     <script>
@@ -118,7 +158,6 @@
             });
             fetchAndRenderData(1);
         });
-
     </script>
     <script>
         function confirmDelete(id) {
@@ -137,15 +176,16 @@
                 }
             });
         }
+
         function onDelete(id) {
             $.ajax({
                 type: "get",
                 url: "{{ route('admin.education.delete') }}",
                 data: {
-                    'id':id,
+                    'id': id,
                 },
-                success: function (response) {
-                    if(response.status == 200) {
+                success: function(response) {
+                    if (response.status == 200) {
                         Swal.fire(response.message);
                         getData();
                     } else {

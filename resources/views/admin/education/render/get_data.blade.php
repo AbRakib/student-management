@@ -22,9 +22,12 @@
                         <i class="fas fa-info-circle"></i>
                     </a>
                     @include('admin.education.modal.view')
-                    <a href="javascript:void(0);" class="btn btn-info btn-circle btn-sm">
+                    
+                    <a href="javascript:void(0);" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#exampleModalEdit-{{ $education->id }}">
                         <i class="fas fa-edit"></i>
                     </a>
+                    @include('admin.education.modal.edit')
+
                     <a href="javascript:void(0);" 
                     onclick="return confirmDelete({{ $education->id }})" 
                     class="btn btn-danger btn-circle btn-sm">

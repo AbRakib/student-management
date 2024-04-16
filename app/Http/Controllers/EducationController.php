@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class EducationController extends Controller {
 
-    private $pagination_item;
+    private $__pagination_item;
     public function __construct() {
-        $this->pagination_item = config('app.default_pagination_item');
+        $this->__pagination_item = config('app.default_pagination_item');
     }
     /**
      * Display a listing of the resource.
@@ -55,12 +55,12 @@ class EducationController extends Controller {
      */
     public function show(Education $education, Request $request) {
         if (isset($request->pagination_item) && ($request->pagination_item != '')) {
-            $this->pagination_item = intval($request->pagination_item);
+            $this->__pagination_item = intval($request->pagination_item);
         }
         $educations = Education::where('deleted', 0)
             ->where('status', 1)
             ->orderByDesc('id');
-        $educations = $educations->paginate($this->pagination_item);
+        $educations = $educations->paginate($this->__pagination_item);
         $start_sl = (($educations->currentPage() - 1) * $educations->perPage()) + 1;
         $view = view('admin.education.render.get_data', compact('educations', 'start_sl'))->render();
         return response()->json([
@@ -79,8 +79,25 @@ class EducationController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Education $education) {
-        //
+    public function update(Request $request, $id) {
+        try {
+            $education = Education::where('id', $id)
+                ->first();
+            $education->name = $request->name;
+            $education->added_ip = $request->ip();
+            $education->added_by = Auth::user()->id;
+            $education->created_at = now();
+            $education->update();
+            return response()->json([
+                'status' => 200,
+                'message' => 'success',
+            ]);
+        } catch (\Exception $error) {
+            return response()->json([
+                'status' => 404,
+                'message' => $error->getMessage(),
+            ]);
+        }
     }
 
     /**

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email'     => 'admin@gmail.com',
             'phone'     => '+8801767270051',
             'address'   => 'Dhaka, Bangladesh',
-            'password'  => Hash::make('password'),
+            'password'  => Hash::make('123'),
             'created_at'=> now()
         ]);
     }

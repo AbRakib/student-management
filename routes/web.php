@@ -17,6 +17,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/index-education', [EducationController::class, 'index'])->name('admin.education.index');
     Route::get('/show-education', [EducationController::class, 'show'])->name('admin.education.show');
     Route::post('/store-education', [EducationController::class, 'store'])->name('admin.education.store');
+    Route::post('/update-education/{id}', [EducationController::class, 'update'])->name('admin.education.update');
     Route::get('/delete-education', [EducationController::class, 'destroy'])->name('admin.education.delete');
 
     //Gender route
